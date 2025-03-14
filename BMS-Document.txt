@@ -109,6 +109,13 @@ eksctl create cluster --name=kastro-eks \
 It will take 5-10 minutes to create the cluster
 Goto EKS Console and verify the cluster.
 
+eksctl delete cluster --name=kastro-eks \
+                      --region=us-east-1 \
+                      --zones=us-east-1a,us-east-1b \
+                      --version=1.30 \
+                      --without-nodegroup
+
+
 (b)
 eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
@@ -142,6 +149,23 @@ eksctl create nodegroup --cluster=kastro-eks \
                        --alb-ingress-access
 
 It will take 5-10 minutes 
+
+eksctl delete nodegroup --cluster=kastro-eks \
+                       --region=us-east-1 \
+                       --name=node2 \
+                       --node-type=t2.medium \
+                       --nodes=3 \
+                       --nodes-min=2 \
+                       --nodes-max=4 \
+                       --node-volume-size=20 \
+                       --ssh-access \
+                       --ssh-public-key=test \
+                       --managed \
+                       --asg-access \
+                       --external-dns-access \
+                       --full-ecr-access \
+                       --appmesh-access \
+                       --alb-ingress-access
 
 (d) For internal communication b/w control plane and worker nodes, open 'all traffic' in the security group of EKS Cluster
 
